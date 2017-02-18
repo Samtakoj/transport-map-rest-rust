@@ -1,26 +1,29 @@
 #[macro_use] extern crate nickel;
-#[macro_use] extern crate serde_json;
+#[macro_use] extern crate serde;
+#[macro_use] extern crate serde_derive;
+extern crate serde_json;
 
 use nickel::Nickel;
+use serde::de::{Deserialize};
+use serde::ser::{Serialize};
 
-use serde_json::{
-    to_string_pretty,
-};
+#[derive(Serialize, Deserialize, Debug)]
+struct Status {
+    name: String,
+    version: String,
+    location: String,
+    status: String,
+}
 
 fn main() {
     let mut server = Nickel::new();
     let host_port = "127.0.0.1:6767";
-
-    let json_response = json!({
-        "name" : "Transport-map-rest-rust",
-        "version" : "0.0.1",
-        "location" : host_port,
-        "status" : "GREEN"
-    });
+    let status = Status { name : "Transport-map-rest-rust".to_string(), version : "0.0.1".to_string(),
+        location : host_port.to_string(), status : "GREEN".to_string() };
 
     server.utilize(router! {
         get "**" => |_req, _res| {
-            to_string_pretty(&json_response).unwrap()
+            serde_json::to_string_pretty(&status).unwrap()
         }
     });
 

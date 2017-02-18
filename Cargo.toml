@@ -6,4 +6,6 @@ authors = ["Artsiom <artkostm@gmail.com>"]
 [dependencies.nickel]
 git = "https://github.com/nickel-org/nickel.rs.git"
 [dependencies]
+serde = "0.9"
+serde_derive = "0.9"
 serde_json = "0.9"
