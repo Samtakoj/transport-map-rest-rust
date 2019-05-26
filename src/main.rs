@@ -1,13 +1,12 @@
 #[macro_use] extern crate nickel;
-#[macro_use] extern crate serde;
-#[macro_use] extern crate serde_derive;
+extern crate serde;
 extern crate serde_json;
+#[macro_use] extern crate serde_derive;
 
-use nickel::Nickel;
-use serde::de::{Deserialize};
-use serde::ser::{Serialize};
+use nickel::{Nickel, JsonBody, HttpRouter, MediaType};
+use nickel::status::StatusCode;
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize)]
 struct Status {
     name: String,
     version: String,
